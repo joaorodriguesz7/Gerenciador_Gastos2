@@ -21,8 +21,28 @@ Qualquer pessoa que queira organizar suas finanças básicas.
 - Integrado com GitHub Actions
 - Ruff
 
+## ℹ️ Informações Adicionais
+Versão Atual: 1.0.0
+
+Autor: João Paulo Rodrigues De Oliveira 
+
+Repositório: https://github.com/joaorodriguesz7/gerenciador-gastos
+
 ## ▶️ Como executar
 
 ```bash
 git clone https://github.com/joaorodriguesz7/gerenciador-gastos.git
 cd gerenciador-gastos
+
+Passo 2 - Criar o ambiente virtual ultilizando
+python -m venv venv
+
+Passo 3 - Ativar o ambiente virtual:
+.\venv\Scripts\activate
+
+Passo 4 - Instalar dependências:
+pip install -r requirements.txt
+
+Passo 5 - python src/app.py
+
+
