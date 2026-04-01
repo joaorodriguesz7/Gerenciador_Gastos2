@@ -24,5 +24,5 @@ Qualquer pessoa que queira organizar suas finanças básicas.
 ## ▶️ Como executar
 
 ```bash
-git clone https://github.com/seu-usuario/gerenciador-gastos.git
+git clone https://github.com/joaorodriguesz7/gerenciador-gastos.git
 cd gerenciador-gastos
