@@ -23,4 +23,5 @@ Qualquer pessoa que queira organizar suas finanças básicas.
 ## ▶️ Como executar
 
 ```bash
-python src/app.py
+git clone https://github.com/seu-usuario/gerenciador-gastos.git
+cd gerenciador-gastos
