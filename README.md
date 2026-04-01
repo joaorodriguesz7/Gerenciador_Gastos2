@@ -18,6 +18,7 @@ Qualquer pessoa que queira organizar suas finanças básicas.
 ## 🛠 Tecnologias
 - Python
 - Pytest
+- Integrado com GitHub Actions
 - Ruff
 
 ## ▶️ Como executar
