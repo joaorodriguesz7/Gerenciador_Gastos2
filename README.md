@@ -26,12 +26,12 @@ Versão Atual: 1.0.0
 
 Autor: João Paulo Rodrigues De Oliveira 
 
-Repositório: https://github.com/joaorodriguesz7/gerenciador-gastos
+Repositório: (https://github.com/joaorodriguesz7/Gerenciador_Gastos.git)
 
 ## ▶️ Como executar
 
 ```bash
-git clone https://github.com/joaorodriguesz7/gerenciador-gastos.git
+git clone (https://github.com/joaorodriguesz7/Gerenciador_Gastos.git)
 cd gerenciador-gastos
 
 Passo 2 - Criar o ambiente virtual ultilizando
