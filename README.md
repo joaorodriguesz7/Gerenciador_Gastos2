@@ -31,7 +31,7 @@ Repositório: https://github.com/joaorodriguesz7/gerenciador-gastos
 ## ▶️ Como executar
 
 ```bash
-git clone https://github.com/joaorodriguesz7/gerenciador-gastos.git
+git clone https://github.com/joaorodriguesz7/Gerenciador-gastos.git
 cd gerenciador-gastos
 
 Passo 2 - Criar o ambiente virtual ultilizando
