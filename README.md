@@ -32,7 +32,7 @@ Repositório: (https://github.com/joaorodriguesz7/Gerenciador_Gastos.git)
 
 ```bash
 git clone (https://github.com/joaorodriguesz7/Gerenciador_Gastos.git)
-cd gerenciador-gastos
+cd Gerenciador_Gastos
 
 Passo 2 - Criar o ambiente virtual ultilizando
 python -m venv venv
