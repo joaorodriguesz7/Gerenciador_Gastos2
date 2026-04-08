@@ -26,13 +26,13 @@ Versão Atual: 1.0.0
 
 Autor: João Paulo Rodrigues De Oliveira 
 
-Repositório: (https://github.com/joaorodriguesz7/Gerenciador_Gastos.git)
+Repositório: https://github.com/joaorodriguesz7/Gerenciador_Gastos.git
 
 ## ▶️ Como executar
 
 ```bash
 Passo 1 - Abrir o terminal e clonar o repositório 
-git clone (https://github.com/joaorodriguesz7/Gerenciador_Gastos.git)
+git clone https://github.com/joaorodriguesz7/Gerenciador_Gastos.git
 cd Gerenciador_Gastos
 
 Passo 2 - Instalar dependências:
