@@ -31,18 +31,14 @@ Repositório: (https://github.com/joaorodriguesz7/Gerenciador_Gastos.git)
 ## ▶️ Como executar
 
 ```bash
+Passo 1 - Abrir o terminal e clonar o repositório 
 git clone (https://github.com/joaorodriguesz7/Gerenciador_Gastos.git)
 cd Gerenciador_Gastos
 
-Passo 2 - Criar o ambiente virtual ultilizando
-python -m venv venv
-
-Passo 3 - Ativar o ambiente virtual:
-.\venv\Scripts\activate
-
-Passo 4 - Instalar dependências:
+Passo 2 - Instalar dependências:
 pip install -r requirements.txt
 
-Passo 5 - python src/app.py
+Passo 3 - Rodar a aplicação
+python src/app.py
 
 
