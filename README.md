@@ -31,7 +31,7 @@ Repositório: https://github.com/joaorodriguesz7/Gerenciador_Gastos.git
 ## ▶️ Como executar
 
 ```bash
-Passo 1 - Instalar a versão do Python 3.13 na Microsoft Store
+Passo 1 - Instalar a versão Python 3.13 na Microsoft Store
 
 Passo 2 - Abrir o terminal e clonar o repositório 
 git clone https://github.com/joaorodriguesz7/Gerenciador_Gastos.git
