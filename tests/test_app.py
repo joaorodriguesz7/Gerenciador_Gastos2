@@ -1,22 +1,51 @@
-from src.app import adicionar, total, remover, gastos
+from fastapi.testclient import TestClient
+from src.app import app, gastos
 import pytest
 
 
-def setup_function():
+@pytest.fixture(autouse=True)
+def limpar_gastos():
+    """Limpa a lista de gastos antes de cada teste."""
+    gastos.clear()
+    yield
     gastos.clear()
 
 
+client = TestClient(app)
+
+
 def test_adicionar_gasto():
-    adicionar(50, "mercado")
-    assert total() == 50
+    resposta = client.post("/gastos", json={"valor": 50.0, "descricao": "mercado"})
+    assert resposta.status_code == 201
+    assert resposta.json()["gasto"]["valor"] == 50.0
 
 
 def test_valor_negativo():
-    with pytest.raises(ValueError):
-        adicionar(-10, "erro")
+    resposta = client.post("/gastos", json={"valor": -10.0, "descricao": "erro"})
+    assert resposta.status_code == 400
+
+
+def test_listar_gastos():
+    client.post("/gastos", json={"valor": 30.0, "descricao": "lanche"})
+    resposta = client.get("/gastos")
+    assert resposta.status_code == 200
+    assert len(resposta.json()["gastos"]) == 1
+
+
+def test_ver_total():
+    client.post("/gastos", json={"valor": 100.0, "descricao": "supermercado"})
+    client.post("/gastos", json={"valor": 50.0, "descricao": "farmácia"})
+    resposta = client.get("/total")
+    assert resposta.json()["total_brl"] == 150.0
 
 
 def test_remover_gasto():
-    adicionar(20, "lanche")
-    remover(0)
-    assert total() == 0
+    client.post("/gastos", json={"valor": 20.0, "descricao": "lanche"})
+    resposta = client.delete("/gastos/0")
+    assert resposta.status_code == 200
+    assert client.get("/total").json()["total_brl"] == 0.0
+
+
+def test_remover_indice_invalido():
+    resposta = client.delete("/gastos/999")
+    assert resposta.status_code == 404
