@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerenciador de Gastos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+      padding: 30px 16px;
+      color: #1a1a2e;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      color: #1a1a2e;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      font-size: 1rem;
+      margin-bottom: 14px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    input:focus { border-color: #4f46e5; }
+
+    button {
+      width: 100%;
+      padding: 11px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #4338ca; }
+
+    .gasto-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.95rem;
+    }
+
+    .gasto-item:last-child { border-bottom: none; }
+
+    .gasto-item .desc { color: #333; }
+    .gasto-item .valor { color: #4f46e5; font-weight: 600; }
+
+    .btn-remover {
+      background: none;
+      border: none;
+      color: #e53e3e;
+      cursor: pointer;
+      font-size: 1rem;
+      width: auto;
+      padding: 0 8px;
+    }
+
+    .btn-remover:hover { background: none; color: #c53030; }
+
+    .totais {
+      display: flex;
+      gap: 12px;
+    }
+
+    .total-box {
+      flex: 1;
+      background: #4f46e5;
+      color: white;
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .total-box.usd { background: #059669; }
+
+    .total-box .label {
+      font-size: 0.75rem;
+      opacity: 0.85;
+      margin-bottom: 4px;
+    }
+
+    .total-box .valor {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .vazio {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.9rem;
+      padding: 10px 0;
+    }
+
+    .msg {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #e53e3e;
+      margin-top: 6px;
+      min-height: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>💰 Gerenciador de Gastos</h1>
+
+<div class="container">
+
+  <!-- Adicionar gasto -->
+  <div class="card">
+    <h2>Adicionar gasto</h2>
+    <input type="number" id="valor" placeholder="Valor (R$)" min="0" step="0.01" />
+    <input type="text" id="descricao" placeholder="Descrição" />
+    <button onclick="adicionarGasto()">Adicionar</button>
+    <p class="msg" id="msg-add"></p>
+  </div>
+
+  <!-- Lista de gastos -->
+  <div class="card">
+    <h2>Meus gastos</h2>
+    <div id="lista-gastos"><p class="vazio">Nenhum gasto registrado.</p></div>
+  </div>
+
+  <!-- Totais -->
+  <div class="totais">
+    <div class="total-box">
+      <div class="label">Total em Reais</div>
+      <div class="valor" id="total-brl">R$ 0,00</div>
+    </div>
+    <div class="total-box usd">
+      <div class="label">Total em Dólar</div>
+      <div class="valor" id="total-usd">US$ --</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const API = 'https://gerenciador-gastos-jade.vercel.app';
+
+  async function carregarGastos() {
+    const res = await fetch(`${API}/gastos`);
+    const dados = await res.json();
+    const lista = document.getElementById('lista-gastos');
+
+    if (dados.gastos.length === 0) {
+      lista.innerHTML = '<p class="vazio">Nenhum gasto registrado.</p>';
+    } else {
+      lista.innerHTML = dados.gastos.map((g, i) => `
+        <div class="gasto-item">
+          <span class="desc">${g.descricao}</span>
+          <span class="valor">R$ ${g.valor.toFixed(2)}</span>
+          <button class="btn-remover" onclick="removerGasto(${i})">✕</button>
+        </div>
+      `).join('');
+    }
+
+    await carregarTotais();
+  }
+
+  async function carregarTotais() {
+    const resBrl = await fetch(`${API}/total`);
+    const brl = await resBrl.json();
+    document.getElementById('total-brl').textContent =
+      'R$ ' + brl.total_brl.toFixed(2);
+
+    try {
+      const resUsd = await fetch(`${API}/total/dolar`);
+      const usd = await resUsd.json();
+      document.getElementById('total-usd').textContent =
+        'US$ ' + usd.total_usd.toFixed(2);
+    } catch {
+      document.getElementById('total-usd').textContent = 'Erro';
+    }
+  }
+
+  async function adicionarGasto() {
+    const valor = parseFloat(document.getElementById('valor').value);
+    const descricao = document.getElementById('descricao').value.trim();
+    const msg = document.getElementById('msg-add');
+
+    if (!valor || valor <= 0 || !descricao) {
+      msg.textContent = 'Preencha o valor e a descrição.';
+      return;
+    }
+
+    const res = await fetch(`${API}/gastos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ valor, descricao })
+    });
+
+    if (res.ok) {
+      document.getElementById('valor').value = '';
+      document.getElementById('descricao').value = '';
+      msg.textContent = '';
+      await carregarGastos();
+    } else {
+      msg.textContent = 'Erro ao adicionar gasto.';
+    }
+  }
+
+  async function removerGasto(index) {
+    await fetch(`${API}/gastos/${index}`, { method: 'DELETE' });
+    await carregarGastos();
+  }
+
+  carregarGastos();
+</script>
+
+</body>
+</html>
