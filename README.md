@@ -1,4 +1,8 @@
-# Gerenciador de Gastos Pessoais
+# 💰 Gerenciador de Gastos Pessoais
+
+🔗 **Frontend:** https://joaorodriguesz7.github.io/Gerenciador_Gastos/
+🚀 **API:** https://gerenciador-gastos-jade.vercel.app
+📖 **Documentação:** https://gerenciador-gastos-jade.vercel.app/docs
 
 ## 📌 Problema
 Muitas pessoas enfrentam dificuldades para manter o controle dos seus gastos no dia a dia. Pequenas despesas, como lanches, transporte ou compras rápidas, acabam não sendo registradas e, ao final do mês, o usuário não consegue identificar para onde seu dinheiro foi. Essa falta de organização financeira pode gerar dificuldade para economizar e até levar ao endividamento.
@@ -42,5 +46,3 @@ pip install -r requirements.txt
 
 Passo 4 - Rodar a aplicação
 python src/app.py
-
-
