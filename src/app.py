@@ -1,10 +1,16 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 
 app = FastAPI(title="Gerenciador de Gastos", version="2.0.0")
 
-# Banco de dados em memória (igual ao projeto original)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 gastos: list[dict] = []
 
 
